@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Register from '../views/Register.vue'
-import Login from '../views/Login.vue'
-import OTP from '../views/OTP.vue'
-import UpdatePassword from '../views/UpdatePassword.vue'
-import ForgetPassword from '../views/ForgetPassword.vue'
+import Register from '../views/auth/Register.vue'
+import Login from '../views/auth/Login.vue'
+import OTP from '../views/auth/OTP.vue'
+import UpdatePassword from '../views/auth/UpdatePassword.vue'
+import ForgetPassword from '../views/auth/ForgetPassword.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
