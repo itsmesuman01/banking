@@ -1,0 +1,123 @@
+<template>
+    <div class="container">
+    <form @submit.prevent="submitForm(formcode)" class="border border-1 border-dotted border-warning pt-4 pb-4 m-5">
+        <div class="row d-flex flex-column align-items-center mt-5 mb-5">
+            <div class="col-md-5">
+                <h1 class="text-center text-danger"><b>FORGET PASSWORD</b></h1>
+            </div>
+        </div>
+        <div v-if="otpSent">
+          <div class="row d-flex flex-column align-items-center">
+              <div class="col-md-4">
+                  <div class="form-group">
+                  <label>Please Enter Your Email Id To Receive <b class="text-success">OTP</b></label>
+                  <input v-model="email" type="email" class="form-control" maxlength="50" required><br>
+                  </div>
+              </div>
+              <div class="col-md-4 text-center">
+                  <div class="form-group">
+                      <input type="submit" class="btn btn-success" value="Send">&nbsp;
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div v-else>
+          <div class="row d-flex flex-column align-items-center">
+              <div class="col-md-4">
+                  <div class="form-group">
+                  <label>New Password</label>
+                  <input v-model="password" type="password" class="form-control" maxlength="50" required><br>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                  <label>Confirm New Password</label>
+                  <input v-model="password_confirmation" type="password" class="form-control" maxlength="50" required><br>
+                  </div>
+              </div>
+              <div class="col-md-4 text-center">
+                  <div class="form-group">
+                      <input type="submit" class="btn btn-success" value="Update">&nbsp;
+                  </div>
+              </div>
+          </div>
+        </div>
+    </form>
+    </div>
+    </template>
+    
+    <script>
+    import axios from 'axios'
+    const url = 'http://127.0.0.1:8000/api/'
+    export default {
+      data() {
+        return {
+          email: '',
+          id: '',
+          formcode: 1,
+          otpSent: true,
+          password: '',
+          password_confirmation: '',
+        }
+      },
+      methods: {
+        submitForm(formcode) {
+          if(formcode == 1)
+          {
+              const formData = {
+              'email': this.email,
+            };
+            axios.post(url + 'updateandforgetpasswordverify', formData)
+              .then(response => {
+                console.log(response)
+                if(response.data.code == 200)
+                {
+                  const message = response.data.message
+                  alert(message)
+                  this.id = response.data.id
+                  this.formcode = 2;
+                  this.otpSent = false
+                }
+                else
+                {
+                  const message = response.data.message
+                  alert(message)
+                }
+              })
+              .catch(error => {
+                console.error(error)
+              });
+              this.email = ''
+          }
+          else
+          {
+            const formData = {
+              'id' : this.id,
+              'password': this.password,
+              'password_confirmation': this.password_confirmation,
+            };
+            axios.post(url + 'forgetpassword', formData)
+              .then(response => {
+                console.log(response)
+                if(response.data.code == 200)
+                {
+                  const message = response.data.message
+                  alert(message)
+                  this.$router.push('/');
+                }
+                else
+                {
+                  const message = response.data.message
+                  alert(message)
+                }
+              })
+              .catch(error => {
+                console.error(error)
+              });
+              this.password = ''
+              this.password_confirmation = ''
+          }
+        }
+      }
+    }
+    </script>

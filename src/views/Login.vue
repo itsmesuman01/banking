@@ -22,7 +22,9 @@
             <div class="col-md-4 text-center">
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Login">&nbsp;
-                    <RouterLink to="/register" class="btn btn-danger">Register</RouterLink>
+                    <RouterLink to="/register" class="btn btn-danger">Register</RouterLink>&nbsp;
+                    <RouterLink to="/updatepassword" class="btn btn-warning">Update</RouterLink>&nbsp;
+                    <RouterLink to="/forgetpassword" class="btn btn-info">Forget</RouterLink>
                 </div>
             </div>
         </div>
@@ -44,6 +46,3 @@
         }
     }
     </script>
-    
-    <style scoped>
-    </style>
