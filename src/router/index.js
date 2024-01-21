@@ -4,6 +4,7 @@ import Login from '../views/auth/Login.vue'
 import OTP from '../views/auth/OTP.vue'
 import UpdatePassword from '../views/auth/UpdatePassword.vue'
 import ForgetPassword from '../views/auth/ForgetPassword.vue'
+import Dashboard from '../views/Dashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/forgetpassword',
       name: 'forgetpassword',
       component: ForgetPassword
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard
     },
   ]
 })

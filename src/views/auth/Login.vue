@@ -54,7 +54,7 @@
                     {
                         const message = response.data.message;
                         const access_token = response.data.access_token;
-                        alert(message)
+                        this.$router.push('/dashboard')
                     }
                     else
                     {
