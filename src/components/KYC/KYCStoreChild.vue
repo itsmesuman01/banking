@@ -178,7 +178,7 @@
 </template>
     <script>
     import axios from 'axios'
-    const url = 'http://127.0.0.1/api/auth/kyc/'
+    const url = 'http://127.0.0.1:8000/api/auth/kyc/'
     export default{
         data(){
             return{
