@@ -5,6 +5,12 @@ import OTP from '../views/auth/OTP.vue'
 import UpdatePassword from '../views/auth/UpdatePassword.vue'
 import ForgetPassword from '../views/auth/ForgetPassword.vue'
 import Dashboard from '../views/Dashboard.vue'
+import KYC from '../views/KYC/KYC.vue'
+import KYCStore from '../views/KYC/KYCStore.vue'
+import Opening from '../views/Opening.vue'
+import ChequeIssue from '../views/ChequeIssue.vue'
+import Deposit from '../views/Deposit.vue'
+import Withdraw from '../views/Withdraw.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +44,36 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard
+    },
+    {
+      path: '/kyc',
+      name: 'kyc',
+      component: KYC
+    },
+    {
+      path: '/kycstore',
+      name: 'kycstore',
+      component: KYCStore
+    },
+    {
+      path: '/opening',
+      name: 'opening',
+      component: Opening
+    },
+    {
+      path: '/chequeissue',
+      name: 'chequeissue',
+      component: ChequeIssue
+    },
+    {
+      path: '/deposit',
+      name: 'deposit',
+      component: Deposit
+    },
+    {
+      path: '/withdraw',
+      name: 'withdraw',
+      component: Withdraw
     },
   ]
 })

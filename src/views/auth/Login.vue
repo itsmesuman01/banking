@@ -54,6 +54,9 @@
                     {
                         const message = response.data.message;
                         const access_token = response.data.access_token;
+                        localStorage.setItem('access_token', access_token);
+                        const abc = localStorage.getItem('access_token');
+                        alert(abc)
                         this.$router.push('/dashboard')
                     }
                     else
