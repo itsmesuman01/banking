@@ -1,49 +1,52 @@
 <template>
-    <div class="mainbar">
-        <div class="container p-5">
-            <form @submit.prevent="submitForm">
+    <div class="mainbar p-5">
+      <div v-if="kycEnable">
+        <input type="text" v-model="kycnumber" @input="delayedKycNumberChanged" class="form-control mb-5" placeholder="Please Enter KYC Number">
+      </div>
+      <div v-else>
+        <form @submit.prevent="submitForm">
                 <div class="row">
                     <h2><b>Basic</b></h2>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>First Name</label>
-                        <input v-model="first_name" type="text" class="form-control" maxlength="50" required><br>
+                        <input v-model="first_name" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Middle Name</label>
-                        <input v-model="middle_name" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="middle_name" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Last Name</label>
-                        <input v-model="last_name" type="text" class="form-control" maxlength="50" required><br>
+                        <input v-model="last_name" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Date Of Birth ( BS )</label>
-                        <input v-model="dob_bs" type="date" class="form-control" maxlength="50" required><br>
+                        <input v-model="dob_bs" type="date" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Date Of Birth ( AD )</label>
-                        <input v-model="dob_ad" type="date" class="form-control" maxlength="50" required><br>
+                        <input v-model="dob_ad" type="date" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Citizenship No</label>
-                            <input v-model="citizen_no" type="text" class="form-control" maxlength="50"><br>
+                            <input v-model="citizen_no" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Email</label>
-                            <input v-model="email" type="email" class="form-control" maxlength="50"><br>
+                            <input v-model="email" type="email" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                 </div>
@@ -52,35 +55,31 @@
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Father Name</label>
-                        <input v-model="father_name" type="text" class="form-control" maxlength="50" required><br>
+                        <input v-model="father_name" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Mother Name</label>
-                        <input v-model="mother_name" type="text" class="form-control" maxlength="50" required><br>
+                        <input v-model="mother_name" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Marital Status</label>
-                            <select v-model="martial_status" class="form-control">
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Widowed">Widowed</option>
-                            </select>
+                            <input v-model="martial_status" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Husband / Wife Name</label>
-                        <input v-model="huswif_name" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="huswif_name" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Job</label>
-                        <input v-model="job" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="job" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                 </div>
@@ -89,31 +88,31 @@
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Province</label>
-                        <input v-model="permanent_province" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="permanent_province" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Ward No</label>
-                        <input v-model="permanent_ward_no" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="permanent_ward_no" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Village / Tole Name</label>
-                        <input v-model="permanent_viltol" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="permanent_viltol" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>House No</label>
-                        <input v-model="permanent_house_no" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="permanent_house_no" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Contact No</label>
-                        <input v-model="permanent_contact_no" type="number" class="form-control" maxlength="50"><br>
+                        <input v-model="permanent_contact_no" type="number" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                 </div>
@@ -122,31 +121,31 @@
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Province</label>
-                        <input v-model="temporary_province" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="temporary_province" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Ward No</label>
-                        <input v-model="temporary_ward_no" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="temporary_ward_no" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Village / Tole Name</label>
-                        <input v-model="temporary_viltol" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="temporary_viltol" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>House No</label>
-                        <input v-model="temporary_house_no" type="text" class="form-control" maxlength="50"><br>
+                        <input v-model="temporary_house_no" type="text" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Contact No</label>
-                        <input v-model="temporary_contact_no" type="number" class="form-control" maxlength="50"><br>
+                        <input v-model="temporary_contact_no" type="number" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                 </div>
@@ -155,13 +154,13 @@
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Annual Income</label>
-                        <input v-model="annual_income" type="number" class="form-control" maxlength="50"><br>
+                        <input v-model="annual_income" type="number" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Annual Family Income</label>
-                        <input v-model="annual_family_income" type="number" class="form-control" maxlength="50"><br>
+                        <input v-model="annual_family_income" type="number" class="form-control" maxlength="50" readonly><br>
                         </div>
                     </div>
                 </div>
@@ -173,43 +172,108 @@
                     </div>
                 </div>
             </form>
-        </div>
+      </div>
     </div>
-</template>
-    <script>
-    import axios from 'axios'
-    const url = 'http://127.0.0.1:8000/api/auth/kyc/'
-    export default{
-        data(){
-            return{
-            first_name: '',
-            middle_name: '',
-            last_name: '',
-            dob_bs: '',
-            dob_ad: '',
-            citizen_no: '',
-            email: '',
-            father_name: '',
-            mother_name: '',
-            martial_status: '',
-            huswif_name: '',
-            job: '',
-            permanent_province: '',
-            permanent_ward_no: '',
-            permanent_viltol: '',
-            permanent_house_no: '',
-            permanent_contact_no: '',
-            temporary_province: '',
-            temporary_ward_no: '',
-            temporary_viltol: '',
-            temporary_house_no: '',
-            temporary_contact_no: '',
-            annual_income: '',
-            annual_family_income: '',
-            }
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  const url = 'http://127.0.0.1:8000/api/auth/opening/';
+  
+  export default {
+    data() {
+      return {
+        kycdata: [],
+        message: '',
+        kycEnable: true,
+        kycnumber: '',
+
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        dob_bs: '',
+        dob_ad: '',
+        citizen_no: '',
+        email: '',
+        father_name: '',
+        mother_name: '',
+        martial_status: '',
+        huswif_name: '',
+        job: '',
+        permanent_province: '',
+        permanent_ward_no: '',
+        permanent_viltol: '',
+        permanent_house_no: '',
+        permanent_contact_no: '',
+        temporary_province: '',
+        temporary_ward_no: '',
+        temporary_viltol: '',
+        temporary_house_no: '',
+        temporary_contact_no: '',
+        annual_income: '',
+        annual_family_income: '',
+      };
+    },
+    methods: {
+      delayedKycNumberChanged() {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.kycNumberChanged();
+        }, 500);
+      },
+      kycNumberChanged() {
+        const accessToken = localStorage.getItem('access_token')
+        const formData = {
+            'kycnumber': this.kycnumber,
+        }
+        axios.post(url + 'index', formData, {
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
         },
-        methods:{
-            submitForm(){
+        }).then(response => {
+            console.log(response);
+            if(response.data.code == 200)
+            {
+                this.kycdata = response.data.pass;
+                for (const kyc of this.kycdata) {
+                    console.log(kyc.firstname)
+                    this.first_name = kyc.first_name;
+                    this.middle_name = kyc.middle_name;
+                    this.last_name = kyc.last_name;
+                    this.dob_bs = kyc.dob_bs;
+                    this.dob_ad = kyc.dob_ad;
+                    this.citizen_no = kyc.citizen_no;
+                    this.email = kyc.email;
+                    this.father_name = kyc.father_name;
+                    this.mother_name = kyc.mother_name;
+                    this.martial_status = kyc.martial_status;
+                    this.huswif_name = kyc.huswif_name;
+                    this.job = kyc.job;
+                    this.permanent_province = kyc.permanent_province;
+                    this.permanent_ward_no = kyc.permanent_ward_no;
+                    this.permanent_viltol = kyc.permanent_viltol;
+                    this.permanent_house_no = kyc.permanent_house_no;
+                    this.permanent_contact_no = kyc.permanent_contact_no;
+                    this.temporary_province = kyc.temporary_province;
+                    this.temporary_ward_no = kyc.temporary_ward_no;
+                    this.temporary_viltol = kyc.temporary_viltol;
+                    this.temporary_house_no = kyc.temporary_house_no;
+                    this.temporary_contact_no = kyc.temporary_contact_no;
+                    this.annual_income = kyc.annual_income;
+                    this.annual_family_income = kyc.annual_family_income;
+                }
+                this.kycEnable = false;
+            }
+            else
+            {
+                const message = response.data.message;
+                alert(message)
+            }
+        }).catch(error => {
+            console.log(error);
+        });
+      },
+      submitForm(){
                 const accessToken = localStorage.getItem('access_token')
                 const formData = {
                     'first_name': this.first_name,
@@ -257,15 +321,16 @@
                     console.log(error)
                 })
             }
-        }
-    }
-    </script>
-    
-    <style scoped>
-    .mainbar{
-        height:100%;
-        width:100%;
-        background-color: white;
-        color:black;
-    }
-    </style>
+    },
+  };
+  </script>
+  
+  <style scoped>
+  .mainbar {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    color: black;
+  }
+  </style>
+  

@@ -31,6 +31,15 @@
                 <input v-model="password_confirmation" type="password" class="form-control" maxlength="50" required><br>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Branch</label>
+                <select v-model="branch" class="form-control">
+                    <option value="KTM">KTM</option>
+                    <option value="NUW">NUW</option>
+                </select><br>
+            </div>
+        </div>
         <div class="col-md-4 text-center">
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Register">&nbsp;
@@ -52,6 +61,7 @@ export default {
       email: '',
       password: '',
       password_confirmation: '',
+      branch: '',
     }
   },
   methods: {
@@ -61,6 +71,7 @@ export default {
         'email': this.email,
         'password': this.password,
         'password_confirmation': this.password_confirmation,
+        'branch': this.branch,
       };
       axios.post(url + 'register', formData)
         .then(response => {

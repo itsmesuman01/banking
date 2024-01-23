@@ -52,16 +52,15 @@
                 axios.post(url + 'login', formData).then(response =>{
                     if(response.data.code == 200)
                     {
-                        const message = response.data.message;
-                        const access_token = response.data.access_token;
-                        localStorage.setItem('access_token', access_token);
-                        const abc = localStorage.getItem('access_token');
-                        alert(abc)
+                        const message = response.data.message
+                        const access_token = response.data.access_token
+                        localStorage.setItem('access_token', access_token)
+                        alert(message)
                         this.$router.push('/dashboard')
                     }
                     else
                     {
-                        const message = response.data.message;
+                        const message = response.data.message
                         alert(message)
                     }
                 }).catch(error =>

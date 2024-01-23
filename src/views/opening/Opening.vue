@@ -8,7 +8,7 @@
                 <Sidebar></Sidebar>
             </div>
             <div class="mainbar">
-                <Withdraw></Withdraw>
+                <Opening></Opening>
             </div>
         </div>
         <div class="footer">
@@ -20,14 +20,14 @@
 import Topbar from '@/components/Topbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Footer from '@/components/Footer.vue'
-import Withdraw from '@/components/WithdrawChild.vue'
+import Opening from '@/components/Opening/OpeningChild.vue'
 
 export default{
     components:{
         Topbar,
         Footer,
         Sidebar,
-        Withdraw
+        Opening
     }
 }
 </script>

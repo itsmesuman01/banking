@@ -7,13 +7,32 @@
         <RouterLink class="sidebar-link" to="chequeissue">Cheque Issues</RouterLink>
         <RouterLink class="sidebar-link" to="deposit">Deposit</RouterLink>
         <RouterLink class="sidebar-link" to="withdraw">Withdrawn</RouterLink>
+        <a @click="logout" class="sidebar-link-logout">LOGOUT</a>
     </div>
 </template>
-    <script>
-    export default{
-    
+<script>
+import axios from 'axios'
+const url = 'http://127.0.0.1:8000/api/auth/main/'
+export default{
+    methods:{
+        logout(){
+            const accessToken = localStorage.getItem('access_token')
+            axios.get(url + 'logout', {
+                headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                },
+            }).then(response => {
+                console.log(response)
+                const message = response.data.message;
+                alert(message)
+                this.$router.push('/')
+            }).catch(error => {
+                console.log(error)
+            })
+        }
     }
-    </script>
+}
+</script>
     
     <style scoped>
     .sidebar{
@@ -40,5 +59,13 @@
         border-bottom: 1px solid #555;
         padding-bottom: 25px;
         margin-bottom: 25px;
+    }
+    .sidebar-link-logout{
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
     }
     </style>
