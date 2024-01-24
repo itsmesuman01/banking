@@ -165,6 +165,42 @@
                     </div>
                 </div>
                 <div class="row">
+                    <h2><b>Account</b></h2>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label>Account Type</label>
+                        <select v-model="account_type" @input="delayedAccountTypeChanged" class="form-control">
+                            <option value="CURRENT">CURRENT</option>
+                            <option value="SAVING">SAVING</option>
+                        </select><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label>Transaction Date (AD)</label>
+                        <input v-model="account_date_ad" type="date" class="form-control" maxlength="50" readonly><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label>Transaction Date (BS)</label>
+                        <input v-model="account_date_bs" type="date" class="form-control" maxlength="50" readonly><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label>Interest Rate (%)</label>
+                        <input v-model="account_rate" type="text" class="form-control" maxlength="50" readonly><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label>Min Amount (RS)</label>
+                        <input v-model="account_min_amt" type="text" class="form-control" maxlength="50" readonly><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Create">&nbsp;
@@ -188,6 +224,7 @@
         kycEnable: true,
         kycnumber: '',
 
+        customer_id: '',
         first_name: '',
         middle_name: '',
         last_name: '',
@@ -212,7 +249,29 @@
         temporary_contact_no: '',
         annual_income: '',
         annual_family_income: '',
+        account_types: '',
+        account_date_ad: '',
+        account_date_bs: '',
+        account_rate: '',
+        account_min_amt: '',
       };
+    },
+    mounted()
+    {
+        const accessToken = localStorage.getItem('access_token')
+        axios.get(url + 'getengnepdate', {
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+            }
+        }).then(response => {
+            if(response.date.code == 200)
+            {
+                console.log(response)
+                this.account_date_ad = response.data.englishdate;
+            }
+        }).catch(error=>{
+            console.log(error)
+        });
     },
     methods: {
       delayedKycNumberChanged() {
@@ -220,6 +279,42 @@
         this.timeout = setTimeout(() => {
             this.kycNumberChanged();
         }, 500);
+      },
+      delayedAccountTypeChanged() {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.accountTypeChanged();
+        }, 500);
+      },
+      accountTypeChanged(){
+        const accessToken = localStorage.getItem('access_token')
+        const formData = {
+            'account_type': this.account_type,
+        }
+        axios.post(url + 'accounttype', formData, {
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+        },
+        }).then(response => {
+            console.log(response);
+            if(response.data.code == 200)
+            {
+                for(const data of response.data.data)
+                {
+                    // this.account_types = data.account_types
+                    // this.account_date_ad = data.account_date_ad
+                    // this.account_date_bs = data.account_date_bs
+                    this.account_rate = data.account_rate
+                    this.account_min_amt = data.account_min_amt
+                }
+            }
+            else
+            {
+                const message = response.data.message;
+            }
+        }).catch(error => {
+            console.log(error);
+        });
       },
       kycNumberChanged() {
         const accessToken = localStorage.getItem('access_token')
@@ -237,6 +332,7 @@
                 this.kycdata = response.data.pass;
                 for (const kyc of this.kycdata) {
                     console.log(kyc.firstname)
+                    this.customer_id = kyc.customer_id;
                     this.first_name = kyc.first_name;
                     this.middle_name = kyc.middle_name;
                     this.last_name = kyc.last_name;
@@ -276,6 +372,7 @@
       submitForm(){
                 const accessToken = localStorage.getItem('access_token')
                 const formData = {
+                    'customer_id': this.customer_id,
                     'first_name': this.first_name,
                     'middle_name': this.middle_name,
                     'last_name': this.last_name,
@@ -300,6 +397,11 @@
                     'temporary_contact_no': this.temporary_contact_no,
                     'annual_income': this.annual_income,
                     'annual_family_income': this.annual_family_income,
+                    'account_types': this.account_types,
+                    'account_date_ad': this.account_date_ad,
+                    'account_date_bs': this.account_date_bs,
+                    'account_rate': this.account_rate,
+                    'account_min_amt': this.account_min_amt,
                 };
                 axios.post(url + 'store', formData, {
                     headers: {

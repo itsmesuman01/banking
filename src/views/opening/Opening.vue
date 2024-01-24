@@ -20,7 +20,7 @@
 import Topbar from '@/components/Topbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Footer from '@/components/Footer.vue'
-import Opening from '@/components/Opening/OpeningChild.vue'
+import Opening from '@/components/opening/OpeningChild.vue'
 
 export default{
     components:{

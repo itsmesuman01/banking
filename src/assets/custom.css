@@ -20,16 +20,15 @@
   .section .sidebar,
   .section .mainbar {
     height: 85vh;
+    overflow-x: auto;
   }
   
   .section .sidebar {
     width: 280px;
-    overflow: scroll;
   }
   
   .section .mainbar {
     flex: 1;
-    overflow: scroll;
   }
   .footer
   {
