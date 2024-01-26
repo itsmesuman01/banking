@@ -169,7 +169,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Account Type</label>
-                        <select v-model="account_type" @input="delayedAccountTypeChanged" class="form-control">
+                        <select v-model="account_types" @input="delayedAccountTypeChanged" class="form-control">
                             <option value="CURRENT">CURRENT</option>
                             <option value="SAVING">SAVING</option>
                         </select><br>
@@ -178,13 +178,13 @@
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Transaction Date (AD)</label>
-                        <input v-model="account_date_ad" type="date" class="form-control" maxlength="50" readonly><br>
+                        <input v-model="account_date_ad" type="date" class="form-control" maxlength="50"><br>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Transaction Date (BS)</label>
-                        <input v-model="account_date_bs" type="date" class="form-control" maxlength="50" readonly><br>
+                        <input v-model="account_date_bs" type="date" class="form-control" maxlength="50"><br>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -256,23 +256,23 @@
         account_min_amt: '',
       };
     },
-    mounted()
-    {
-        const accessToken = localStorage.getItem('access_token')
-        axios.get(url + 'getengnepdate', {
-            headers: {
-                'Authorization': 'Bearer ' + accessToken,
-            }
-        }).then(response => {
-            if(response.date.code == 200)
-            {
-                console.log(response)
-                this.account_date_ad = response.data.englishdate;
-            }
-        }).catch(error=>{
-            console.log(error)
-        });
-    },
+    // mounted()
+    // {
+    //     const accessToken = localStorage.getItem('access_token')
+    //     axios.get(url + 'getengnepdate', {
+    //         headers: {
+    //             'Authorization': 'Bearer ' + accessToken,
+    //         }
+    //     }).then(response => {
+    //         if(response.date.code == 200)
+    //         {
+    //             console.log(response)
+    //             this.account_date_ad = response.data.englishdate;
+    //         }
+    //     }).catch(error=>{
+    //         console.log(error)
+    //     });
+    // },
     methods: {
       delayedKycNumberChanged() {
         clearTimeout(this.timeout);
@@ -289,7 +289,7 @@
       accountTypeChanged(){
         const accessToken = localStorage.getItem('access_token')
         const formData = {
-            'account_type': this.account_type,
+            'account_types': this.account_types,
         }
         axios.post(url + 'accounttype', formData, {
         headers: {
@@ -301,9 +301,6 @@
             {
                 for(const data of response.data.data)
                 {
-                    // this.account_types = data.account_types
-                    // this.account_date_ad = data.account_date_ad
-                    // this.account_date_bs = data.account_date_bs
                     this.account_rate = data.account_rate
                     this.account_min_amt = data.account_min_amt
                 }
